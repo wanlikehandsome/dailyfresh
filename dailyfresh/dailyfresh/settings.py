@@ -142,7 +142,7 @@ EMAIL_FROM = '唐贤斌<txbhandsome564@163.com>'
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://127.0.0.1:6379/9',
+        'LOCATION': 'redis://111.230.22.105/9',
         'DPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
         }
