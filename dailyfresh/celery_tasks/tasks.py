@@ -1,6 +1,6 @@
 # 使用celery
 from celery import Celery
-from django.conf import settings
+# from django.conf import settings
 from django.core.mail import send_mail
 
 
@@ -26,7 +26,7 @@ def send_register_active_email(to_email, username, token):
               '<a href="http://qjpd.xyz:8000/user/active/%s">http://qjpd.xyz:8000/user/active/%s</a>' % (
               username, token, token)
     html_message = message
-    sender = settings.EMAIL_FROM
+    sender = '唐贤斌<txbhandsome564@163.com>'
     receiver = [to_email]
 
     send_mail(subject, message, sender, receiver, html_message=html_message)
