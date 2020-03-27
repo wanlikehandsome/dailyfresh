@@ -1,17 +1,18 @@
 # 使用celery
 from celery import Celery
-# from django.conf import settings
+from django.conf import settings
 from django.core.mail import send_mail
 
 
-# import os
-# import django
+import os
+import django
 # from goods.models import GoodsType, IndexGoodsBanner, IndexPromotionBanner, IndexTypeGoodsBanner
 # from django_redis import get_redis_connection
 # from django.template import loader, RequestContext
 
 # django 初始化
-
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "dailyfresh.settings")
+django.setup()
 
 # 出纳兼一个Celery实例对象
 app = Celery('celery_tasks.tasks', broker='redis://127.0.0.1:6379/8')
