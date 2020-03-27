@@ -19,6 +19,7 @@ from django_redis import get_redis_connection
 from apps.goods.models import GoodsSKU
 from apps.order.models import OrderGoods, OrderInfo
 from django.core.paginator import Paginator
+import time
 
 
 # Create your views here.
@@ -66,6 +67,8 @@ class RegisterView(View):
         # 添加任务到celery队列
         result = send_register_active_email.delay(email, username, token)
         # 返回应答, 跳转到首页
+        while not result.ready():
+            time.sleep(1)
         if result.get():
             return redirect(reverse('user:index'))  # 注意不能有空格
         else:
