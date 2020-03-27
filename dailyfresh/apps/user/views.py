@@ -64,9 +64,12 @@ class RegisterView(View):
         token = serializer.dumps(info)
         token = token.decode('utf-8')
         # 添加任务到celery队列
-        send_register_active_email.delay(email, username, token)
+        result = send_register_active_email.delay(email, username, token)
         # 返回应答, 跳转到首页
-        return redirect(reverse('user:index'))  # 注意不能有空格
+        if result.get():
+            return redirect(reverse('user:index'))  # 注意不能有空格
+        else:
+            return render(request, 'register.html', {'errmsg': "链接未发出"})
 
 
 class ActiveView(View):
