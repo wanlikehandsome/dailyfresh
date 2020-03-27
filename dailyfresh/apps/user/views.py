@@ -64,15 +64,21 @@ class RegisterView(View):
         info = {'confirm': user.id}
         token = serializer.dumps(info)
         token = token.decode('utf-8')
-        # 添加任务到celery队列
-        result = send_register_active_email.delay(email, username, token)
+        # 发送邮件
+        subject = '天天生鲜欢迎信息'
+
+        message = '<h1>%s, 欢迎您成为天天生鲜用户</h1>请点击以下链接激活您的账户<br />' \
+                  '<a href="http://qjpd.xyz:8000/user/active/%s">http://qjpd.xyz:8000/user/active/%s</a>' % (
+                      username, token, token)
+        html_message = message
+        sender = '唐贤斌<txbhandsome564@163.com>'
+        receiver = [email]
+
+        send_mail(subject, message, sender, receiver, html_message=html_message)
+        # send_register_active_email.delay(email, username, token)
         # 返回应答, 跳转到首页
-        while not result.ready():
-            time.sleep(1)
-        if result.get():
-            return redirect(reverse('user:index'))  # 注意不能有空格
-        else:
-            return render(request, 'register.html', {'errmsg': "链接未发出"})
+        return redirect(reverse('user:index'))  # 注意不能有空格
+
 
 
 class ActiveView(View):
