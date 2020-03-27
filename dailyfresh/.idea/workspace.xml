@@ -54,10 +54,10 @@
         <entry file="file://$PROJECT_DIR$/templates/login.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="221">
-              <caret line="49" column="82" lean-forward="true" selection-start-line="49" selection-start-column="82" selection-end-line="49" selection-end-column="82" />
+              <caret line="49" column="64" selection-start-line="49" selection-start-column="64" selection-end-line="49" selection-end-column="64" />
               <folding>
+                <element signature="n#style#0;n#span#0;n#div#1;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#h1#0;n#div#1;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#h1#1;n#div#1;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -257,12 +257,12 @@
       <workItem from="1584761691413" duration="801000" />
       <workItem from="1585056170228" duration="597000" />
       <workItem from="1585145715380" duration="1193000" />
-      <workItem from="1585280851305" duration="3222000" />
+      <workItem from="1585280851305" duration="3487000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="128550000" />
+    <option name="totallyTimeSpent" value="128815000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
@@ -696,10 +696,10 @@
     <entry file="file://$PROJECT_DIR$/templates/login.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
-          <caret line="49" column="82" lean-forward="true" selection-start-line="49" selection-start-column="82" selection-end-line="49" selection-end-column="82" />
+          <caret line="49" column="64" selection-start-line="49" selection-start-column="64" selection-end-line="49" selection-end-column="64" />
           <folding>
+            <element signature="n#style#0;n#span#0;n#div#1;n#!!top" expanded="true" />
             <element signature="n#style#0;n#h1#0;n#div#1;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#h1#1;n#div#1;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
