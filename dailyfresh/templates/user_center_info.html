@@ -20,23 +20,43 @@
 
 				<h3 class="common_title2">最近浏览</h3>
 				<div class="has_view_list">
+                    {% csrf_token %}
 					<ul class="goods_type_list clearfix">
                         {% for goods in goods_li %}
 				        <li>
-                            <a href="detail.html"><img src="{{ goods.image.url }}"></a>
+                            <a href="detail.html"><img src="/static/media/{{ goods.image.url }}"></a>
                             <h4><a href="detail.html">{{ goods.name }}</a></h4>
                             <div class="operate">
                                 <span class="prize">{{ goods.price }}</span>
                                 <span class="unit">{{ goods.price }}/{{ goods.unite }}</span>
-                                <a href="#" class="add_goods" title="加入购物车"></a>
+                                <a href="javascript:;" sku_id="{{goods.id}}"class="add_goods" title="加入购物车"></a>
                             </div>
 				        </li>
                             {% empty %}
                                 <h1>无历史浏览记录</h1>
                         {% endfor %}
-
 			        </ul>
 		</div>
     </div>
 {% endblock right_content %}
+{% block bottomfiles %}
+    <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+    <script>
+    $('.add_goods').click(function (e) {
+        csrf = $('input[name="csrfmiddlewaretoken"]').val()
+        count = 1
+        sku_id = parseInt($(this).attr('sku_id'))
+        console.log('click', sku_id)
+        console.log(csrf)
+        params = {'csrfmiddlewaretoken': csrf, "count": count, 'sku_id': sku_id}
+        $.post('/cart/add', params, function (data) {
+            if (data.res == 5) {
+                location.href='/cart/'
+            } else {
+                alert(data.errmsg)
+            }
+        })
+    })
+    </script>
+{% endblock %}
 

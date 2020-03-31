@@ -24,10 +24,10 @@ def send_register_active_email(to_email, username, token):
     subject = '天天生鲜欢迎信息'
 
     message = '<h1>%s, 欢迎您成为天天生鲜用户</h1>请点击以下链接激活您的账户<br />' \
-              '<a href="http://qjpd.xyz:8000/user/active/%s">http://qjpd.xyz:8000/user/active/%s</a>' % (
+              '<a href="http://127.0.0.1:8000/user/active/%s">http://127.0.0.1:8000/user/active/%s</a>' % (
               username, token, token)
     html_message = message
-    sender = '唐贤斌<txbhandsome564@163.com>'
+    sender = settings.EMAIL_FROM
     receiver = [to_email]
 
     send_mail(subject, message, sender, receiver, html_message=html_message)
@@ -71,3 +71,12 @@ def send_register_active_email(to_email, username, token):
 #     save_path = os.path.join(settings.BASE_DIR, 'static/index.html')
 #     with open(save_path, 'w') as f:
 #         f.write(static_index_html)
+
+
+
+
+
+
+
+
+

@@ -17,14 +17,12 @@
 
 	<div class="goods_detail_con clearfix">
 		<div class="goods_detail_pic fl"><img src="/static/media/{{sku.image.url  }}"></div>
-        <p>{{ sku.image.url }}</p>
-
 		<div class="goods_detail_list fr">
 			<h3>{{ sku.name }}</h3>
 			<p>{{ sku.desc }}</p>
 			<div class="prize_bar">
 				<span class="show_pirze">¥<em>{{ sku.price }}</em></span>
-				<span class="show_unit">单  位：{{ sku.unite }}</span>
+				<span class="show_unit">单  位：{{ sku.unite }}g</span>
 			</div>
 			<div class="goods_num clearfix">
 				<div class="num_name fl">数 量：</div>
@@ -45,7 +43,7 @@
             </div>
 			<div class="total">总价：<em>16.80元</em></div>
 			<div class="operate_btn">
-				<a href="javascript:;" class="buy_btn">立即购买</a>
+				<a href="javascript" sku_id="{{ sku.id }}" class="buy_btn">立即购买</a>
 				<a href="javascript:;"sku_id="{{ sku.id }}" class="add_cart" id="add_cart">加入购物车</a>
 			</div>
 		</div>
@@ -56,10 +54,10 @@
 			<div class="new_goods">
 				<h3>新品推荐</h3>
 				<ul>
-                    {% for new_goods in new_skus %}
+                    {% for sku in new_skus %}
 					<li>
 						<a href="{% url 'goods:detail' sku.id %}"><img src="/static/media/{{ sku.image.url }}"></a>
-						<h4><a href="#">{{ sku.name }}</a></h4>
+						<h4><a href="{% url 'goods:detail' sku.id %}">{{ sku.name }}</a></h4>
 						<div class="prize">￥{{ sku.price }}</div>
 					</li>
                     {% endfor %}
@@ -74,20 +72,27 @@
 			</ul>
 
 			<div class="tab_content">
+                <div id="detail" >
 				<dl>
 					<dt>商品详情：</dt>
                     {% autoescape off %}
 					<dd>{{ sku.goods.detail|safe }}</dd>
                     {% endautoescape %}
 				</dl>
-            <dl>
+                </div>
+
+                <div id="comment" style="display: none">
+                <dl>
                 {% for order in sku_orders %}
 					<dt>评论时间：{{ order.update_time }} &nbsp;&nbsp;用户名: {{order.order.user.username}}</dt>
                     {% autoescape off %}
 					<dd>评论内容:{{ order.comment }} </dd>
                     {% endautoescape %}
-            {% endfor %}
+                    {% empty %}
+                    <span>暂无评价信息, 做第一个吃螃蟹的人吧!</span>
+                {% endfor %}
 				</dl>
+                </div>
 			</div>
 
 		</div>
@@ -117,7 +122,7 @@
 
             $.post('/cart/add', params, function (data) {
                 if (data.res == 5) {
-                    alert(data.successmsg)
+                    location.href = '/cart/'
                 } else {
                     alert(data.errmsg)
                 }
@@ -143,6 +148,7 @@
         amount = count * price
         $('.total').children('em').text(amount.toFixed(2)+'元')
     }
+
     update_goods_amount()
     $('.add').click(function () {
         count = $('.num_show').val()
@@ -150,6 +156,7 @@
         $('.num_show').val(count)
         update_goods_amount()
     })
+
     $('.minus').click(function () {
         if (count <= 0) {
             count = 0
@@ -160,6 +167,7 @@
         }
         update_goods_amount()
     })
+
     $('.num_show').blur(function () {
         count = $(this).val()
         if (isNaN(count) || count.trim().length==0 || parseInt(count) <= 0) {
@@ -169,5 +177,39 @@
         update_goods_amount()
     })
 	</script>
+
+    <script>
+        var list = $('.detail_tab').children()
+        var ul = $('.detail_tab')
+        ul.click(function (e) {
+            var target = e.target
+            if (target.classList.contains('active')) {
+
+            } else {
+                for (var i=0; i<list.length; i++) {
+                    if (list[i].classList.contains('active')) {
+                        list[i].classList.remove('active')
+                    } else {
+
+                    }
+                }
+                target.classList.add('active')
+            }
+            if (list[0].classList.contains('active')) {
+                $('#detail').show()
+                $('#comment').hide()
+            } else {
+                $('#detail').hide()
+                $('#comment').show()
+            }
+        })
+
+
+
+    </script>
+
+    <script>
+
+    </script>
 {% endblock bottomfiles %}
 	

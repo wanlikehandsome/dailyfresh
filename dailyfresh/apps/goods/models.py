@@ -55,6 +55,7 @@ class Goods(BaseModel):
         db_table = 'df_goods'
         verbose_name = '商品SPU'
         verbose_name_plural = verbose_name
+
     def __str__(self):
         return self.name
 
@@ -104,6 +105,7 @@ class IndexTypeGoodsBanner(BaseModel):
 
     def __str__(self):
         return self.type.name
+
 
 class IndexPromotionBanner(BaseModel):
     '''首页促销活动模型类'''

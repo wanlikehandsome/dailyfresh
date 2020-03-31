@@ -15,7 +15,6 @@ class CartAddView(View):
 
         sku_id = request.POST.get('sku_id')
         count = request.POST.get('count')
-        # print(sku_id, count, 'fuck....')
 
         if not all([sku_id, count]):
             return JsonResponse({'res': 1, 'errmsg': '数据不完整'})
@@ -38,6 +37,7 @@ class CartAddView(View):
             if count > sku.stock:
                 return JsonResponse({'res': 4, 'errmsg': '商品库存不足'})
             conn.hset(cart_key, sku_id, count)
+
         return JsonResponse({'res': 5, 'successmsg': '添加购物车成功'})
 
 

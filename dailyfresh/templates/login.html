@@ -45,12 +45,7 @@
 				</div>
 			</div>
 		</div>
-
-        {% if errmsg == '用户未激活' %}
-            <span style="color: red; font-size: 20px;">{{ errmsg }} 请注意查看自己的邮箱, 通过邮箱中的链接激活账号</span>
-        {% else %}
-            <h1 style="color: red; font-size: 20px;">{{errmsg}}</h1>
-        {% endif %}
+        {{ errmsg }}
 	</div>
     {% endblock body %}
 

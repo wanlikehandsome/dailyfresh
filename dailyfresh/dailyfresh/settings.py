@@ -30,7 +30,7 @@ SECRET_KEY = 'l2#%q307)jj_+qxw)qvpx@)^m^2qtysyw6d31^rn-%36@*!(f6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tinymce',
+    # 'haystack'  # 搜索引擎框架
     'apps.user',  # 用户模块
     'apps.order',  # 订单模块
     'apps.cart',  # 购物车模块
@@ -120,7 +121,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'  # 为了前端书写方便
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]  # 为了找到静态文件
-STATIC_ROOT = '/var/www/dailyfresh/static'  # 收集静态文件
 
 # 富文本编辑器配置
 TINYMCE_DEFAULT_CONFIG = {

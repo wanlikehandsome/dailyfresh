@@ -55,6 +55,8 @@ class GoodsSKUAdmin(BaseModelAdmin):
 
 class GoodsAdmin(BaseModelAdmin):
     pass
+
+
 admin.site.register(GoodsType, GoodsTypeAdmin)
 admin.site.register(IndexPromotionBanner, IndexPromotionBannerAdmin)
 admin.site.register(IndexGoodsBanner, IndexGoodsBannerAdmin)

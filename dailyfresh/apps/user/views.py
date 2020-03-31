@@ -19,7 +19,6 @@ from django_redis import get_redis_connection
 from apps.goods.models import GoodsSKU
 from apps.order.models import OrderGoods, OrderInfo
 from django.core.paginator import Paginator
-import time
 
 
 # Create your views here.
@@ -56,7 +55,7 @@ class RegisterView(View):
 
         # 业务处理, 用户注册
         user = User.objects.create_user(username, email, password)  # 在这里就已经存储到数据库了
-        user.is_active = 1
+        user.is_active = 0
         user.save()
 
         # 加密用户的身份信息, 生成激活的token
@@ -64,21 +63,10 @@ class RegisterView(View):
         info = {'confirm': user.id}
         token = serializer.dumps(info)
         token = token.decode('utf-8')
-        # 发送邮件
-        # subject = '天天生鲜欢迎信息'
-        #
-        # message = '<h1>%s, 欢迎您成为天天生鲜用户</h1>请点击以下链接激活您的账户<br />' \
-        #           '<a href="http://qjpd.xyz:8000/user/active/%s">http://qjpd.xyz:8000/user/active/%s</a>' % (
-        #               username, token, token)
-        # html_message = message
-        # sender = '唐贤斌<txbhandsome564@163.com>'
-        # receiver = [email]
-
-        # send_mail(subject, message, sender, receiver, html_message=html_message)
-        # send_register_active_email.delay(email, username, token)
+        # 添加任务到celery队列
+        send_register_active_email.delay(email, username, token)
         # 返回应答, 跳转到首页
         return redirect(reverse('user:index'))  # 注意不能有空格
-
 
 
 class ActiveView(View):
