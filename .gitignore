@@ -116,3 +116,5 @@ dmypy.json
 # Pyre type checker
 .pyre/
 dailyfresh/.idea/workspace.xml
+dailyfresh/.idea/dailyfresh.iml
+dailyfresh/.idea/misc.xml
