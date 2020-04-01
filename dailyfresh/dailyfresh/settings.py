@@ -42,8 +42,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'haystack', # 搜索引擎框架
     'tinymce',
-    # 'haystack'  # 搜索引擎框架
     'apps.user',  # 用户模块
     'apps.order',  # 订单模块
     'apps.cart',  # 购物车模块
@@ -168,8 +168,8 @@ FDFS_URL = 'nginx的ip' + 'nginx的port'
 HAYSTACK_CONNECTIONS = {
     'default': {
         # 在django-haystack中使用whoosh搜索引擎
-        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
-        # 配置生成的索引文件路径
+        'ENGINE': 'haystack.backends.whoosh_chinese_backend.WhooshEngine',
+        # 配置生成的索引文件路径, 自动生成
         'PATH': os.path.join(BASE_DIR, 'whoosh_index')
     }
 }

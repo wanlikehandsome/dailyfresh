@@ -31,7 +31,7 @@
                 </div>
             </li>
             <li class="col07">{{ sku.amount }}元</li>
-            <li class="col08"><a href="{% url 'cart:delete' %}">删除</a></li>
+            <li class="col08"><a href="javascript:;">删除</a></li>
         </ul>
         {% endfor %}
 
@@ -214,7 +214,7 @@
         csrf = $('input[name="csrfmiddlewaretoken"]').val()
         params = {'sku_id': sku_id, 'csrfmiddlewaretoken': csrf}
         sku_ul = $(this).parents('ul')
-        $.post('cart/delete', params, function (data) {
+        $.post('/cart/delete', params, function (data) {
             if (data.res == 3) {
                 sku_ul.remove()
                 is_checked = sku_ul.find(':checkbox').prop('checked')

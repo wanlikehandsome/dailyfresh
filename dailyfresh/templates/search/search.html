@@ -1,0 +1,74 @@
+{% extends 'base_detail_list.html' %}
+{% load staticfiles %}
+
+{% block title %}天天生鲜-搜索列表 {% endblock title%}
+
+{% block main_content %}
+	<div class="breadcrumb">
+		<a href="#">搜索字段: {{ query }}</a>
+		<span>></span>
+		<a href="#">搜索结果如下: </a>
+	</div>
+
+	<div class="main_wrap clearfix">
+
+        <ul class="goods_type_list clearfix">
+
+                {% for item in page %}
+				<li>
+					<a href="{% url 'goods:detail' item.object.id%}"><img src="/static/media/{{ item.object.image.url }}"></a>
+					<h4><a href="{% url 'goods:detail' item.object.id%}">{{ item.object.name }}</a></h4>
+					<div class="operate">
+						<span class="prize">￥{{ item.object.price }}</span>
+						<span class="unit">{{ item.object.price }}元/{{ item.object.unite }}g</span>
+                        {% csrf_token %}
+						<a href="javascript:;" sku_id="{{ item.object.id }}"class="add_goods" title="加入购物车"></a>
+					</div>
+				</li>
+                    {% empty %}
+                    <p style="font-size: 20px;">对不起, 商城暂时没有收纳您想要的商品</p>
+                {% endfor %}
+			</ul>
+
+        <div class="pagenation">
+                {% if page.has_previous %}
+				<a href="/search?q={{ query }}&page={{ page.previous_page_number }}">;lt上一页</a>
+                {% endif %}
+                {% for pindex in paginator.page_range %}
+                    {% if page.number  == pindex%}
+				        <a href="/search?q={{ query }}&page={{ pindex}}" class="active">{{ pindex }}</a>
+                    {% else %}
+                        <a href="/search?q={{ query }}&page={{ pindex}}" class="">{{ pindex }}</a>
+                    {% endif %}
+                {% endfor %}
+                {% if page.has_next %}
+				<a href="">下一页></a>
+                {% endif %}
+			</div>
+	</div>
+
+
+{% endblock main_content %}
+{% block bottomfiles %}
+    <script src="{% static 'js/jquery-1.12.4.min.js'%}"></script>
+    <script>
+        $('.add_goods').click(function (e) {
+        csrf = $('input[name="csrfmiddlewaretoken"]').val()
+        count = 1
+        sku_id = parseInt($(this).attr('sku_id'))
+        {#console.log('click', sku_id)#}
+            {#        {#console.log(csrf)#}
+        params = {'csrfmiddlewaretoken': csrf, "count": count, 'sku_id': sku_id}
+        $.post('/cart/add', params, function (data) {
+            if (data.res == 5) {
+                location.href='/cart/'
+            } else {
+                alert(data.errmsg)
+            }
+        })
+    })
+    </script>
+{% endblock %}
+
+
+
