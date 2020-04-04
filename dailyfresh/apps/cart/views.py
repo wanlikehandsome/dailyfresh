@@ -104,7 +104,7 @@ class CartUpdateView(View):
         return JsonResponse({'res': 5, 'total_count': total_count, 'message': '更新成功'})
 
 
-# cart/delete
+
 class CartDeleteView(View):
     def post(self, request):
         user = request.user

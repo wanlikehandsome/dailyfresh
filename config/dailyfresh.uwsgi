@@ -1,0 +1,10 @@
+[uwsgi]
+socket=127.0.0.1:8000
+chdir=/var/www/tiantianshengxian/dailyfresh
+wsgi-file=dailyfresh/wsgi.py
+processes=4
+threads=2
+master=True
+pidfile=uwsgi.pid
+daemonize=uwsgi.log
+virtualenv=/dev/pydev/dailyfresh
