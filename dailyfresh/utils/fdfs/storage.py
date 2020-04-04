@@ -14,7 +14,7 @@ class FDFSStorage(Storage):
         self.base_url = base_url
 
     def _open(self, name, mode='rb'):
-        """打开文件时调用"""
+        """打开文件时自动调用"""
         pass
 
     def _save(self, name, content):

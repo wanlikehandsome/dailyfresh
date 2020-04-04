@@ -7,5 +7,5 @@ class BaseModel(models.Model):
     is_delete = models.BooleanField(default=False, verbose_name='删除标记')
 
     class Meta:
-        # 为什么要说明是一个抽象模型类
+        # 被继承， 不会创建单独的表
         abstract = True

@@ -90,7 +90,7 @@ class ActiveView(View):
         ...
 
 
-# user/login
+
 class LoginView(View):
     def get(self, request):
         if 'username' in request.COOKIES:
@@ -102,64 +102,49 @@ class LoginView(View):
         return render(request, 'login.html', {'username': username, 'checked': checked})
 
     def post(self, request):
-        # 接受数据
         username = request.POST.get('username')
         password = request.POST.get('pwd')
 
         if not all([username, password]):
             return render(request, 'login.html', {'errmsg': '数据不完整'})
 
-        # user = User.objects.get(username=username, password=password)
-
         user = authenticate(username=username, password=password)
         if user is not None:
             if user.is_active:
-                # 用户已激活, 记录用户的状态, 获取用户登录后要跳转的url地址
                 login(request, user)
                 next_url = request.GET.get('next', reverse('user:user'))
-                # None, 如果不是从用户登录required页面跳转的时候是None
 
-                # 判断是否需要记住用户名
-                response = redirect(next_url)  # HttpResponseRedirect
+                response = redirect(next_url)
                 remember = request.POST.get('remember')
                 if remember == 'on':
                     response.set_cookie('username', username, max_age=7*24*3600)
                 else:
                     response.delete_cookie('username')
                 return response
-
             else:
                 return render(request, 'login.html', {'errmsg': '用户未激活'})
         else:
             return render(request, 'login.html', {'errmsg': '用户名或密码错误'})
 
 
-# user/logout
 class LogoutView(View):
     def get(self, request):
-        logout(request)
+        logout(request)  # logout
         return redirect(reverse('user:index'))
 
 
-# /user
 class UserInfoView(LoginRequiredMixin, View):
     """用户信息"""
     def get(self, request):
-        # 获取用户的个人信息
         user = request.user
         address = Address.objects.get_default_address(user)
-        # 获取用户的历史浏览记录, 每个用户有其独立的存储history的list
         con = get_redis_connection('default')
         history_key = 'history_%d' % user.id
-        # 获取用户最新的浏览的前5个数据
-        sku_ids = con.lrange(history_key, 0, 4)  # 拿到list中的前5条数据
-        # 从数据库中查询用户浏览的商品的具体信息
-        # goods_li = GoodsSKU.objects.filter(id__in=sku_ids)
+        sku_ids = con.lrange(history_key, 0, 4)
         goods_li = []
         for id in sku_ids:
             goods = GoodsSKU.objects.get(id=id)
             goods_li.append(goods)
-        # 组织上下文
         context = {
             'page': 'user',
             'address': address,
@@ -169,18 +154,14 @@ class UserInfoView(LoginRequiredMixin, View):
         return render(request, 'user_center_info.html', context)
 
 
-# /user/order
 class UserOrderView(LoginRequiredMixin, View):
     """用户订单"""
     def get(self, request, page):
-        # 获取用户的订单信息
         user = request.user
         orders = OrderInfo.objects.filter(user=user).order_by('-create_time')
-        # todo: 遍历取得订单的商品信息
         for order in orders:
             order_skus = OrderGoods.objects.filter(order_id=order.order_id)
 
-            # 遍历计算order_skus计算商品的小计
             for order_sku in order_skus:
                 amount = order_sku.count * order_sku.price
                 order_sku.amount = amount
@@ -216,20 +197,12 @@ class UserOrderView(LoginRequiredMixin, View):
         return render(request, 'user_center_order.html', context)
 
 
-# /user/address
+
 class UserSiteView(LoginRequiredMixin, View):
     """用户订单地址"""
     def get(self, request):
-        # 获取用户的默认收货地址
-
-        # 业务处理: 地址添加, 只有为空时才添加默认地址
         user = request.user
-        # try:
-        #     address = Address.objects.get(user=user, is_default=True)
-        # except Address.DoesNotExist:
-        #     address = None
         address = Address.objects.get_default_address(user)
-
         return render(request, 'user_center_site.html', {'page': 'address', 'address': address})
 
     def post(self, request):
@@ -245,12 +218,8 @@ class UserSiteView(LoginRequiredMixin, View):
         if not re.match(r'1[3|4|5|7|8][0-9]{9}', phone):
             return render(request, 'user_center_site.html', {'errmsg': '手机格式不正确'})
 
-        # 业务处理: 地址添加, 只有为空时才添加默认地址
+
         user = request.user
-        # try:
-        #     address = Address.objects.get(user=user, is_default=True)
-        # except Address.DoesNotExist:
-        #     address = None
         address = Address.objects.get_default_address(user)
         if address:
             is_default = False

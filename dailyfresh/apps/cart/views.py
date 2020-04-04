@@ -4,7 +4,6 @@ from django.http import JsonResponse
 from django_redis import get_redis_connection
 from apps.goods.models import GoodsSKU
 from utils.mixin import LoginRequiredMixin
-# Create your views here.
 
 
 class CartAddView(View):

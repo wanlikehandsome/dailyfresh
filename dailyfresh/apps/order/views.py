@@ -14,6 +14,7 @@ from django.conf import settings
 import os
 # Create your views here.
 
+
 class OrderPlaceView(LoginRequiredMixin, View):
     def post(self, request):
         user = request.user
@@ -39,7 +40,6 @@ class OrderPlaceView(LoginRequiredMixin, View):
 
         # 运费, 默认是10
         transit_price = 10
-        # 实付款
         total_pay = total_price + transit_price
         addrs = Address.objects.filter(user=user)
         sku_ids = ','.join(sku_ids)
@@ -74,9 +74,6 @@ class OrderCommitView(View):
             return JsonResponse({'res': 3, 'errmsg': '地址非法'})
 
         # todo: 添加订单的核心业务
-
-        # 组织参数:
-        # 订单id, 年月日+时分秒+id
         order_id = datetime.now().strftime('%Y%m%d%H%M%S') + str(user.id)
         # 运费
         transit_price = 10
@@ -147,7 +144,7 @@ class OrderCommitView(View):
             return JsonResponse({'res': 7, 'errmsg': '下单失败'})
         transaction.savepoint_commit(save_id)
 
-        # todo: 清楚购物车中对应的记录
+        # todo: 清除购物车中对应的商品记录
         conn.hdel(cart_key, *sku_ids)
         return JsonResponse({'res': 5, 'message': '创建成功'})
 
