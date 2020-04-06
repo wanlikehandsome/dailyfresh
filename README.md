@@ -1,37 +1,38 @@
 # tiantianshengxian
 
 #### 介绍
-一个基于django的web项目
-
-#### 软件架构
-软件架构说明
-
-
+```
+本项目是一个基于djangoweb框架的web商城项目, 使用了django + nginx + redis + 
+fdfs + uwsgi, Bootstap等技术栈. 实现了用户注册, 用户登录, 用户浏览商品, 用户
+添加商品到购物车, 用户提交订单, 用户评论......等功能. 是一个完整的web商城应用.
+```
+- 项目首页展示
+![首页](images_for_readme/index.png)
 #### 安装教程
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1.  git clone <a>https://gitee.com/txbhandsom/tiantianshengxian.git</a>
 
 #### 使用说明
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+0. 根据自身情况修改 dailyfresh/dailyfresh/settings.py
+1.  激活python虚拟环境
+2.  安装依赖: pip install -r requirements.txt
+3.  cd daiyfresh
+4.  python manage.py runserver 
 
-#### 参与贡献
+#### 项目效果展示
 
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
-
-
-#### 码云特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  码云官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解码云上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是码云最有价值开源项目，是码云综合评定出的优秀开源项目
-5.  码云官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  码云封面人物是一档用来展示码云会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+1. 注册页面
+![注册页面](images_for_readme/register.png)
+2. 登录页面
+![登录页面](images_for_readme/login.png)
+3. 首页
+![首页](images_for_readme/index.png)
+4. 商品详情页面
+![商品详情页面](images_for_readme/goods_detail.png)
+5. 购物车页面
+![购物车页面](images_for_readme/cart.png)
+6. 订单页面
+![订单页面](images_for_readme/order.png)
+7. 用户详情页面
+![用户详情页面](images_for_readme/user_detail.png)
