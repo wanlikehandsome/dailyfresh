@@ -86,7 +86,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'dailyfresh',
         'USER': 'root',
-        'PASSWORD': 's2017211914',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': 3306,
     }
@@ -95,10 +95,6 @@ DATABASES = {
 # 指定django认证系统使用的模型类
 AUTH_USER_MODEL = 'user.User'
 # 默认会有一个默认的auth_user表, 怕混淆就必须指定自己的模型类
-#
-
-# Internationalization
-# https://docs.djangoproject.com/en/1.8/topics/i18n/
 
 LANGUAGE_CODE = 'zh-hans'
 
@@ -128,9 +124,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # smtp服务器地址
 EMAIL_HOST = 'smtp.163.com'
 EMAIL_PORT = 25
-EMAIL_HOST_USER = 'txbhandsome564@163.com'
-EMAIL_HOST_PASSWORD = 'txbhandsome564'
-EMAIL_FROM = '唐贤斌<txbhandsome564@163.com>'
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_FROM = ''
 
 
 # django 的缓存配置
