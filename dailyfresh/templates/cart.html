@@ -15,6 +15,7 @@
 		<li class="col06">操作</li>
 	</ul>
     <form action="{% url 'order:place' %}" method="post">
+        {% csrf_token %}
         {% for sku in skus %}
         <ul class="cart_list_td clearfix">
             <li class="col01"><input type="checkbox" name="sku_ids" value="{{ sku.id }}"checked /></li>
@@ -24,7 +25,6 @@
             <li class="col05">{{ sku.price }}元</li>
             <li class="col06">
                 <div class="num_add">
-                    {% csrf_token %}
                     <a href="javascript:;" class="add fl">+</a>
                     <input type="text" sku_id ="{{ sku.id }}"class="num_show fl" value="{{ sku.count }}">
                     <a href="javascript:;" class="minus fl">-</a>
@@ -34,10 +34,6 @@
             <li class="col08"><a href="javascript:;">删除</a></li>
         </ul>
         {% endfor %}
-
-
-
-
 	<ul class="settlements">
 		<li class="col01"><input type="checkbox" name="" checked="" /></li>
 		<li class="col02">全选</li>

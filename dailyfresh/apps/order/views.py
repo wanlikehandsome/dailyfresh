@@ -12,7 +12,6 @@ from django.db import transaction
 # from alipay import AliPay, ISVAlipay
 from django.conf import settings
 import os
-# Create your views here.
 
 
 class OrderPlaceView(LoginRequiredMixin, View):
@@ -31,7 +30,7 @@ class OrderPlaceView(LoginRequiredMixin, View):
         for sku_id in sku_ids:
             sku = GoodsSKU.objects.get(id=sku_id)
             count = conn.hget(cart_key, sku_id)
-            amount = sku.price*int(count)
+            amount = sku.price * int(count)
             sku.count = count
             sku.amount = amount
             skus.append(sku)
@@ -98,9 +97,8 @@ class OrderCommitView(View):
             for sku_id in sku_ids:
                 for i in range(3):
                     try:
-                        # sku = GoodsSKU.objects.select_for_update().get(id=sku_id)
                         sku = GoodsSKU.objects.get(id=sku_id)
-                    except:
+                    except GoodsSKU.DoesNotExist as e:
                         transaction.savepoint_rollback(save_id)
                         return JsonResponse({'res': 4, 'errmsg': '商品不存在'})
                     count = conn.hget(cart_key, sku_id)
@@ -112,7 +110,6 @@ class OrderCommitView(View):
                     origin_sales = sku.sales
                     new_stock = origin_stock - int(count)
                     new_sales = origin_sales + int(count)
-                    # update df_goods_sku set stock=new_stock, sales=new_sales where id=sku_id and stock=orgin_stock
                     res = GoodsSKU.objects.filter(id=sku_id, stock=origin_stock).update(stock=new_stock, sales=new_sales)
                     if res == 0:
                         if i == 2:
@@ -124,10 +121,6 @@ class OrderCommitView(View):
                                               sku=sku,
                                               count=count,
                                               price=sku.price)
-                    # todo: 更新商品的库存和销量
-                    # sku.stock -= int(count)
-                    # sku.sales += int(count)
-                    # sku.save()
 
                     # todo: 累加计算订单商品的总数量和总价格
                     amount = sku.price * int(count)

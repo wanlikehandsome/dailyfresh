@@ -6,7 +6,7 @@ from django.core.mail import send_mail
 
 import os
 import django
-from goods.models import GoodsType, IndexGoodsBanner, IndexPromotionBanner, IndexTypeGoodsBanner
+from apps.goods.models import GoodsType, IndexGoodsBanner, IndexPromotionBanner, IndexTypeGoodsBanner
 from django_redis import get_redis_connection
 from django.template import loader, RequestContext
 

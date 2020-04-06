@@ -49,7 +49,7 @@ class CartInfoView(LoginRequiredMixin, View):
 
         skus = []
         total_count = 0
-        total_prict = 0
+        total_price = 0
         for sku_id, count in cart_dict.items():
             sku = GoodsSKU.objects.get(id=sku_id)
             amount = sku.price*int(count)
@@ -57,12 +57,12 @@ class CartInfoView(LoginRequiredMixin, View):
             sku.count = count
             skus.append(sku)
             total_count += int(count)
-            total_prict += amount
+            total_price += amount
 
         context = {
             'skus': skus,
             'total_count': total_count,
-            'total_price': total_prict,
+            'total_price': total_price,
         }
         return render(request, 'cart.html', context=context)
 
@@ -75,7 +75,6 @@ class CartUpdateView(View):
 
         sku_id = request.POST.get('sku_id')
         count = request.POST.get('count')
-        # print(sku_id, count, 'fuck....')
 
         if not all([sku_id, count]):
             return JsonResponse({'res': 1, 'errmsg': '数据不完整'})
@@ -95,14 +94,12 @@ class CartUpdateView(View):
             return JsonResponse({'res': 4, 'errmsg': '商品库存不足'})
         conn.hset(cart_key, sku_id, count)
 
-        # 通过加号来更新数据库
         total_count = 0
         vals = conn.hvals(cart_key)
         for val in vals:
             total_count += int(val)
 
         return JsonResponse({'res': 5, 'total_count': total_count, 'message': '更新成功'})
-
 
 
 class CartDeleteView(View):

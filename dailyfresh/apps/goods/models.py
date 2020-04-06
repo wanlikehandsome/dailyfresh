@@ -1,7 +1,6 @@
 from django.db import models
 from db.base_model import BaseModel
 from tinymce.models import HTMLField
-# Create your models here.
 
 
 class GoodsType(BaseModel):
@@ -48,7 +47,7 @@ class GoodsSKU(BaseModel):
 class Goods(BaseModel):
     '''商品SPU模型类'''
     name = models.CharField(max_length=20, verbose_name='商品SPU名称')
-    # 富文本类型:带有格式的文本
+    # 富文本类型:tinymce
     detail = HTMLField(blank=True, verbose_name='商品详情')
 
     class Meta:

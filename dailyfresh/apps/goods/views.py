@@ -15,13 +15,10 @@ from apps.order.models import OrderGoods
 from django.core.paginator import Paginator
 
 
-# Create your views here.
-
-
 class IndexView(View):
     def get(self, request):
         '''显示首页'''
-        # context = cache.get('index_page_data')
+        context = cache.get('index_page_data')
         context = None
         if context is None:
             types = GoodsType.objects.all()
@@ -31,7 +28,6 @@ class IndexView(View):
             for type in types:
                 image_banners = IndexTypeGoodsBanner.objects.filter(type=type, display_type=1).order_by('index')
                 title_banners = IndexTypeGoodsBanner.objects.filter(type=type, display_type=0).order_by('index')
-                # 动态给type增加属性
                 type.image_banners = image_banners
                 type.title_banners = title_banners
 
@@ -108,7 +104,7 @@ class ListView(View):
             skus = GoodsSKU.objects.filter(type=type).order_by('-id')
 
         paginator = Paginator(skus, 1)
-        # 根据可迭代对象构造paginator对象
+        # 根据可迭代对象构造(paginator对象, 每页数据量)
         try:
             page = int(page)
         except Exception as e:

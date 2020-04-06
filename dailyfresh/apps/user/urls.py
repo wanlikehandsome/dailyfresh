@@ -13,10 +13,8 @@ from django.contrib.auth.decorators import login_required
 
 
 urlpatterns = [
-    # url(r'^register$', views.register, name='register'),
     url(r'^register$', RegisterView.as_view(), name='register'),  # 用户注册
-    url(r'^index$', views.index, name='index'),
-    # url(r'^register_handle', views.register_handle, name="register_handle"),
+    url(r'^index$', views.index, name='index'),  # 用于测试
     url(r'^active/(?P<token>.*)$', ActiveView.as_view(), name='active'),  # 用户激活
     url(r'^login$', LoginView.as_view(), name='login'),  # 用户登录
     url(r'^$', login_required(UserInfoView.as_view()), name='user'),  # 用户中心信息页面
